@@ -14,21 +14,31 @@
 
 + (void)notify:(NSString *)msg
 {
-    UILocalNotification *notify = [[UILocalNotification alloc] init];
-    
-    notify.alertBody = msg;
-    
-    notify.soundName = UILocalNotificationDefaultSoundName;
-    
-    notify.alertTitle = @"提醒";
-    
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notify];
-    
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    if ([self isWorkingTime])
+    {
+        UILocalNotification *notify = [[UILocalNotification alloc] init];
+        
+        notify.alertBody = msg;
+        
+        notify.soundName = UILocalNotificationDefaultSoundName;
+        
+        notify.alertTitle = @"提醒";
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notify];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        });
+    }
 }
 
-- (BOOL)isWorkingTime
++ (BOOL)isWorkingTime
 {
+    
+#warning - 改一下这里可以设置是上班前后推送还是一直推送
+    
+#if 0
+    
     NSDate *curDate = [NSDate date];
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -43,6 +53,12 @@
     }
     
     return NO;
+#else
+    
+    return YES;
+    
+#endif
+    
 }
 
 @end

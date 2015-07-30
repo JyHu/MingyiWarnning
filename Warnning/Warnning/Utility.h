@@ -12,6 +12,6 @@
 
 + (void)notify:(NSString *)msg;
 
-- (BOOL)isWorkingTime;
++ (BOOL)isWorkingTime;
 
 @end

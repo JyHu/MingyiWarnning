@@ -126,6 +126,7 @@
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     [Utility notify:@"进入检测区域，是不是需要上班打卡了呢 ？亲 ~ "];
+        
     [self.p_locationManager startRangingBeaconsInRegion:self.p_beaconRegion];
 }
 
