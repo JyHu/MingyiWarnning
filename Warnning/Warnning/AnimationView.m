@@ -55,12 +55,10 @@
             CGPoint position;
             CTRunGetGlyphs(run, thisGlyphRange, &glyph);
             CTRunGetPositions(run, thisGlyphRange, &position);
-            {
-                CGPathRef letter = CTFontCreatePathForGlyph(runFont, glyph, NULL);
-                CGAffineTransform t = CGAffineTransformMakeTranslation(position.x, position.y);
-                CGPathAddPath(letters, &t, letter);
-                CGPathRelease(letter);
-            }
+            CGPathRef letter = CTFontCreatePathForGlyph(runFont, glyph, NULL);
+            CGAffineTransform t = CGAffineTransformMakeTranslation(position.x, position.y);
+            CGPathAddPath(letters, &t, letter);
+            CGPathRelease(letter);
         }
     }
     CFRelease(line);
@@ -69,7 +67,6 @@
     [path moveToPoint:CGPointZero];
     [path appendPath:[UIBezierPath bezierPathWithCGPath:letters]];
     [path applyTransform:CGAffineTransformMakeRotation(M_PI_4 / 2.0)];
-    [path strokeWithBlendMode:kCGBlendModeColor alpha:0.5];
     
     CGPathRelease(letters);
     CFRelease(font);

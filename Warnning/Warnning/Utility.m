@@ -8,6 +8,7 @@
 
 #import "Utility.h"
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @implementation Utility
 
@@ -21,9 +22,9 @@
     
     notify.alertTitle = @"提醒";
     
-    
-    
     [[UIApplication sharedApplication] presentLocalNotificationNow:notify];
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
 - (BOOL)isWorkingTime
